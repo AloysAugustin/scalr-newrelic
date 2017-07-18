@@ -4,6 +4,7 @@ set -e
 # This script detects the current linux distribution and
 # installs the corresponding NewRelic Infrastructure agent
 
+# It configures the NewRelic license key from the NEWRELIC_LICENSE_KEY global variable
 
 command_exists() {
     command -v "$@" > /dev/null 2>&1
@@ -87,16 +88,6 @@ do_install() {
 			EOF
             exit 1
         fi
-    fi
-
-    ########## ??????????????????????????????????????????????
-    curl=''
-    if command_exists curl; then
-        curl='curl -sSL'
-    elif command_exists wget; then
-        curl='wget -qO-'
-    elif command_exists busybox && busybox --list-modules | grep -q wget; then
-        curl='busybox wget -qO-'
     fi
 
     # perform some very rudimentary platform detection
